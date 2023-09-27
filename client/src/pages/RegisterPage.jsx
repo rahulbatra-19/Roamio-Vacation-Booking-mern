@@ -13,7 +13,7 @@ export function RegisterPage() {
           email,
           password,
         });
-    //     alert("Registration successful. Now you can log in");
+        alert("Registration successful. Now you can log in");
     // } catch (error) {
     //   alert("Registration failed. Please try again later.");
     // }
