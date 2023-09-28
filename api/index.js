@@ -38,13 +38,15 @@ app.post("/register", async (req, res) => {
     });
     res.json(user);
   } catch (error) {
-    res.status(422).json(e);
+    res.status(422).json(error);
   }
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
   const userDoc = await User.findOne({ email });
+  console.log(userDoc);
   if (userDoc) {
     const passOk = bcrypt.compareSync(password, userDoc.password);
     if (passOk) {
