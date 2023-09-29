@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import PhotosUploader from "../PhotosUploader";
 
@@ -15,7 +15,16 @@ export default function PlacesPage() {
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
   const [redirect, setRedirect] = useState("");
+  const [places, setPlaces] = useState([]);
+  //   const [placepage, setPlacePage] = useState(false);
   const navigate = useNavigate();
+  //   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    axios.get("/places").then(({ data }) => {
+      setPlaces(data);
+    });
+  }, []);
 
   function handleCbClick(e) {
     const { checked, name } = e.target;
@@ -49,28 +58,58 @@ export default function PlacesPage() {
   return (
     <div>
       {action !== "new" ? (
-        <div className="text-center">
-          <Link
-            className="bg-primary inline-flex text-white py-2 px-6 rounded-full"
-            to={"/account/places/new"}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+        <>
+          <div className="text-center">
+            <Link
+              className="bg-primary inline-flex text-white py-2 px-6 rounded-full"
+              to={"/account/places/new"}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            Add new places
-          </Link>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+              Add new places
+            </Link>
+          </div>
+          <div className="mt-4">
+            {places.length > 0 &&
+              places.map((place, index) => (
+                <Link
+                  to={"/account/listing/" + place._id}
+                  className="flex cursor-pointer gap-4 bg-gray-200 p-4 mt-2 rounded-2xl"
+                  key={index}
+                >
+                  <div className="w-32 h-32 bg-gray-300 grow shrink-0">
+                    {place.addedPhotos.length > 0 && (
+                      <img
+                        src={
+                          "http://localhost:4000/uploads/" +
+                          place.addedPhotos[0]
+                        }
+                        className=" h-full w-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="grow-0 shrink">
+                    <h2 className="text-xl text-left ">{place.title}</h2>
+                    <p className="text-sm mt-2 text-left">
+                      {place.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+          </div>
+        </>
       ) : (
         <div>
           <form onSubmit={addNewPlace}>
