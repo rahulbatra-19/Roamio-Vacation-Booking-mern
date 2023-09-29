@@ -1,54 +1,50 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import PhotosUploader from "../PhotosUploader";
 
 export default function PlacesPage() {
-  const { action } = useParams();
+  let { action } = useParams();
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [addedPhotos, setAddedPhotos] = useState([]);
-  const [photoLink, setPhotoLink] = useState("");
   const [description, setDescription] = useState("");
   const [perks, setPerks] = useState([]);
   const [extraInfo, setExtraInfo] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
-  function inputHeader(text) {
-    return <h2 className="text-2xl mt-4">{text}</h2>;
-  }
-  function inputDescription(text) {
-    return <h2 className="text-2xl mt-4">{text}</h2>;
-  }
-  async function addPhotoByLink(e) {
-    e.preventDefault();
-    const { data: filename } = await axios.post("/upload-by-link", {
-      link: photoLink,
-    });
-    setAddedPhotos((prev) => {
-      return [...prev, filename];
-    });
-    setPhotoLink("");
-  }
-  function uploadPhoto(e) {
-    const files = e.target.files;
-    console.log({ files });
-    const data = new FormData();
-    for (let file of files) {
-      data.append("photos", file);
+  const [redirect, setRedirect] = useState("");
+  const navigate = useNavigate();
+
+  function handleCbClick(e) {
+    const { checked, name } = e.target;
+    if (checked) {
+      setPerks([...perks, name]);
+    } else {
+      setPerks([...perks.filter((selectedName) => selectedName != name)]);
     }
-    axios
-      .post("/upload", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        const { data: filenames } = response;
-        setAddedPhotos((prev) => {
-          return [...prev, ...filenames];
-        });
-      });
+  }
+  async function addNewPlace(ev) {
+    ev.preventDefault();
+    await axios.post("/places", {
+      title,
+      address,
+      addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+    });
+    setRedirect("/account/places");
+  }
+  console.log(action);
+
+  if (redirect) {
+    setRedirect("");
+    navigate(-1);
   }
   return (
     <div>
@@ -77,7 +73,7 @@ export default function PlacesPage() {
         </div>
       ) : (
         <div>
-          <form>
+          <form onSubmit={addNewPlace}>
             <h2 className="text-2xl mt-4">Title</h2>
             <p className="text-gray-500 text-sm">
               title for your place. should be short and catchy{" "}
@@ -97,55 +93,11 @@ export default function PlacesPage() {
             />
             <h2 className="text-2xl mt-4">Photos</h2>
             <p className="text-gray-500 text-sm">more is better</p>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={photoLink}
-                onChange={(e) => setPhotoLink(e.target.value)}
-                placeholder="Add using a Link ...jpg"
-              />
-              <button
-                className="bg-gray-200 rounded-xl px-4"
-                onClick={addPhotoByLink}
-              >
-                Add&nbsp;photo
-              </button>
-            </div>
+            <PhotosUploader
+              addedPhotos={addedPhotos}
+              onChange={setAddedPhotos}
+            />
 
-            <div className="mt-2 grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {addedPhotos.length > 0 &&
-                addedPhotos.map((link) => (
-                  <div className="h-32 flex">
-                    <img
-                      className="rounded-2xl w-full object-cover "
-                      src={"http://localhost:4000/uploads/" + link}
-                    />
-                  </div>
-                ))}
-              <label className="cursor-pointer h-32 flex items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600">
-                <input
-                  type="file"
-                  multiple
-                  className="hidden"
-                  onChange={uploadPhoto}
-                />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
-                  />
-                </svg>
-                Upload
-              </label>
-            </div>
             <h2 className="text-2xl mt-4">Description</h2>
             <p className="text-gray-500 text-sm">description for the place</p>
             <textarea
@@ -156,7 +108,7 @@ export default function PlacesPage() {
             <p className="text-gray-500 text-sm">perks of the place</p>
             <div className="grid mt-2 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6 ">
               <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer ">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" name="wifi" onChange={handleCbClick} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -175,7 +127,11 @@ export default function PlacesPage() {
                 <span>Wifi</span>
               </label>
               <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer ">
-                <input type="checkbox" name="" id="" />
+                <input
+                  type="checkbox"
+                  name="parking"
+                  onChange={handleCbClick}
+                />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -194,7 +150,7 @@ export default function PlacesPage() {
                 <span>Free parking spot</span>
               </label>
               <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer ">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" name="tv" onChange={handleCbClick} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -213,7 +169,7 @@ export default function PlacesPage() {
                 <span>Tv</span>
               </label>
               <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer ">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" name="pets" onChange={handleCbClick} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -232,7 +188,11 @@ export default function PlacesPage() {
                 <span>Pets</span>
               </label>
               <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer ">
-                <input type="checkbox" name="" id="" />
+                <input
+                  type="checkbox"
+                  name="entrance"
+                  onChange={handleCbClick}
+                />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -251,7 +211,7 @@ export default function PlacesPage() {
                 <span>Private entrance</span>
               </label>
               <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer ">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" name="radio" onChange={handleCbClick} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
