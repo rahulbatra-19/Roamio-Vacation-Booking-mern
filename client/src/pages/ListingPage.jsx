@@ -15,7 +15,7 @@ export default function ListingPage() {
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
   const [redirect, setRedirect] = useState("");
-  const [places, setPlaces] = useState([]);
+  const [price, setPrice] = useState(100);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export default function ListingPage() {
         extraInfo,
         checkOut,
         maxGuests,
+        price,
       } = data;
       console.log(perks);
       setTitle(title);
@@ -42,6 +43,7 @@ export default function ListingPage() {
       setExtraInfo(extraInfo);
       setCheckOut(checkOut);
       setMaxGuests(maxGuests);
+      setPrice(price);
     });
   }, [id]);
 
@@ -66,6 +68,7 @@ export default function ListingPage() {
       checkIn,
       checkOut,
       maxGuests,
+      price,
     });
     navigate(-1);
   }
@@ -260,7 +263,7 @@ export default function ListingPage() {
             add check in and out times, remember to have some time window for
             cleaning the room between guests
           </p>
-          <div className="grid gap-2 sm:grid-cols-3">
+          <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
             <div>
               <h3 className="mt-2 -mb-1">Check in time</h3>
               <input
@@ -286,6 +289,15 @@ export default function ListingPage() {
                 placeholder="3"
                 value={maxGuests}
                 onChange={(e) => setMaxGuests(e.target.value)}
+              />
+            </div>
+            <div>
+              <h3 className="mt-2 -mb-1">Price per night</h3>
+              <input
+                type="number"
+                placeholder="100"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
               />
             </div>
           </div>

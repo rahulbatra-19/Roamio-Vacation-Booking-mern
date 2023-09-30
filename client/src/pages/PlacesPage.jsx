@@ -15,13 +15,14 @@ export default function PlacesPage() {
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
   const [redirect, setRedirect] = useState("");
+  const [price, setPrice] = useState(100);
   const [places, setPlaces] = useState([]);
   //   const [placepage, setPlacePage] = useState(false);
   const navigate = useNavigate();
   //   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get("/places").then(({ data }) => {
+    axios.get("/user-places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);
@@ -46,6 +47,7 @@ export default function PlacesPage() {
       checkIn,
       checkOut,
       maxGuests,
+      price,
     });
     setRedirect("/account/places");
   }
@@ -280,7 +282,7 @@ export default function PlacesPage() {
               add check in and out times, remember to have some time window for
               cleaning the room between guests
             </p>
-            <div className="grid gap-2 sm:grid-cols-3">
+            <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
               <div>
                 <h3 className="mt-2 -mb-1">Check in time</h3>
                 <input
@@ -306,6 +308,15 @@ export default function PlacesPage() {
                   placeholder="3"
                   value={maxGuests}
                   onChange={(e) => setMaxGuests(e.target.value)}
+                />
+              </div>
+              <div>
+                <h3 className="mt-2 -mb-1">Number of Price</h3>
+                <input
+                  type="number"
+                  placeholder="100"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
             </div>
