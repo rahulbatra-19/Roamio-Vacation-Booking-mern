@@ -5,7 +5,7 @@ function Header() {
   const { user } = useContext(UserContext);
 
   return (
-    <header className="flex justify-between">
+    <header className="flex justify-between border-b pb-6">
       <Link to={"/"} className="flex items-center gap-1 text-primary">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ function Header() {
             />
           </svg>
         </div>
-        {!!user && <div>{user.name}</div>}
+        {!!user && <div className="ml-2">{user.name}</div>}
       </Link>
     </header>
   );

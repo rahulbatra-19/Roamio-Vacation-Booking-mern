@@ -14,7 +14,7 @@ export function IndexPage() {
     <div className="mt-8 grid gap-x-7 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {places.length > 0 &&
         places.map((place, index) => (
-          <div key={index}>
+          <Link to={"/place/" + place._id} key={index}>
             <div className="bg-gray-500 rounded-2xl flex ">
               {place.addedPhotos?.[0] ? (
                 <img
@@ -26,7 +26,7 @@ export function IndexPage() {
                 <img alt="no image" className=""></img>
               )}
             </div>
-            <h2 className="font-bold leading-4">{place.title}</h2>
+            <h2 className="font-bold leading-4 mt-3">{place.title}</h2>
             <h3 className="text-sm  text-gray-500 leading-4">
               {place.address}
             </h3>
@@ -34,7 +34,7 @@ export function IndexPage() {
               {" "}
               <span className="font-bold">${place.price}</span> per night
             </div>
-          </div>
+          </Link>
         ))}
     </div>
   );

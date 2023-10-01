@@ -61,7 +61,7 @@ app.post("/login", async (req, res) => {
         (err, token) => {
           if (err) throw err;
           res
-            .cookie("token", token, { maxAge: 2 * 60 * 60 * 1000 })
+            .cookie("token", token, { maxAge: 13 * 60 * 60 * 1000 })
             .json(userDoc);
         }
       );
