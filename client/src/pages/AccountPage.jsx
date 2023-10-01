@@ -3,6 +3,7 @@ import { UserContext } from "../UserContext";
 import { Navigate, Link, useParams } from "react-router-dom";
 import axios from "axios";
 import PlacesPage from "./PlacesPage";
+import BookingsPage from "./BookingsPage";
 
 export default function AccountPage() {
   const [redirect, setRedirect] = useState("");
@@ -104,6 +105,7 @@ export default function AccountPage() {
       )}
 
       {subpage === "places" && <PlacesPage />}
+      {subpage === "bookings" && <BookingsPage />}
     </div>
   );
 }

@@ -90,7 +90,7 @@ export default function ({ label }) {
         </svg>
       );
       break;
-    case "Radio":
+    case "RADIO":
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"

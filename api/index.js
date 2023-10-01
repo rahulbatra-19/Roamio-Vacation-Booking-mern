@@ -9,6 +9,8 @@ const cookieParser = require("cookie-parser");
 const imageDownloader = require("image-downloader");
 const multer = require("multer");
 const fs = require("fs");
+const BookingModel = require("./models/Booking");
+const { resolve } = require("path");
 require("dotenv").config();
 const app = express();
 
@@ -27,6 +29,15 @@ app.use(
 );
 
 mongoose.connect(process.env.MONGO_URL);
+
+function getUserDataFromToken(req) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
+      resolve(userData);
+    });
+  });
+}
 
 app.get("/test", (req, res) => {
   res.json("test ok");
@@ -196,5 +207,37 @@ app.put("/places", async (req, res) => {
 
 app.get("/places", async (req, res) => {
   res.json(await Place.find());
+});
+
+app.post("/bookings", (req, res) => {
+  const { user, place, checkIn, checkOut, numberOfGuests, name, phone, price } =
+    req.body;
+  BookingModel.create({
+    ownerBooking: user,
+    place,
+    checkIn,
+    checkOut,
+    numberOfGuests,
+    name,
+    phone,
+    price,
+  })
+    .then((booking) => {
+      res.json(booking);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/bookings", async (req, res) => {
+  const userData = await getUserDataFromToken(req);
+  res.json(
+    await BookingModel.find({ ownerBooking: userData.id }).populate("place")
+  );
+});
+app.get("/booking/:id", async (req, res) => {
+  const { id } = req.params;
+  res.json(await BookingModel.findById(id).populate("place"));
 });
 app.listen(4000);

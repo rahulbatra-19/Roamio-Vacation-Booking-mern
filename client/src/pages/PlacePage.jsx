@@ -67,10 +67,11 @@ export default function PlacePage() {
       </div>
     );
   }
+
   return (
     <div className="bg-gray-50">
       <div className="mt-4 lg:mx-8   md:mx-3  lg:px-8 pt-8">
-        <h1 className="text-2xl">{place.title}</h1>
+        <h1 className="text-4xl">{place.title}</h1>
         <a
           target="_black"
           href={`https://maps.google.com/?q=${place.address}`}
@@ -149,7 +150,6 @@ export default function PlacePage() {
             Show more photos
           </button>
         </div>
-
         <div className="grid m-8 gap-9  lg:grid-cols-[2fr_1fr] grid-cols-1">
           <div className="p-0 md:p-3 lg:p-5">
             <div className="my-4 ">
@@ -157,9 +157,24 @@ export default function PlacePage() {
               {place.description}
             </div>
             <div className="border-t py-4 ">
-              Check-In: {place.checkIn} <br />
-              Check-Out: {place.checkOut} <br />
-              Max number of guests : {place.maxGuests}
+              <h2 className="font-semibold text-2xl my-4">Occupancy</h2>
+              <span className="text-gray-600">Check-In: </span>
+              {place.checkIn > 12 ? (
+                <span> {place.checkIn} Pm</span>
+              ) : (
+                <span>{place.checkIn} Am</span>
+              )}
+              <br />
+              <span className="text-gray-600">Check-Out: </span>
+              {place.checkOut > 12 ? (
+                <span>{place.checkOut - 12} Pm</span>
+              ) : (
+                <span>{place.checkOut} Am</span>
+              )}
+              <br />
+
+              <span className="text-gray-600"> Max number of guests: </span>
+              {place.maxGuests}
             </div>
 
             <div className="my-4    border-t">

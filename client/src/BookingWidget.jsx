@@ -1,24 +1,62 @@
+import axios from "axios";
 import { differenceInCalendarDays } from "date-fns";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "./UserContext";
+import { Navigate } from "react-router-dom";
 
 export default function BookingWidget({ place }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(1);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState();
+  const { user } = useContext(UserContext);
+  const [redirect, setRedirect] = useState("");
+  const [isButtonDisabled, setIsButtonDiabled] = useState(true);
+
   let numberOfNights = 0;
   if (checkIn && checkOut) {
     numberOfNights = differenceInCalendarDays(
       new Date(checkOut),
       new Date(checkIn)
     );
+    setIsButtonDiabled(false);
   }
+  async function book() {
+    if (user === null) {
+      alert("Please login!");
+      setRedirect("/login");
+      return;
+    }
+    if (name == "" || phone == "") {
+      alert("Please fill in name and phone number!!");
+      return;
+    }
+    const data = {
+      user: user._id,
+      checkIn,
+      checkOut,
+      name,
+      phone,
+      place: place._id,
+      numberOfGuests,
+      price: place.price * numberOfNights,
+    };
+    const response = await axios.post("/bookings", data);
+    const bookingId = response.data._id;
+    setRedirect(`/account/bookings/${bookingId}`);
+  }
+  if (redirect) {
+    return <Navigate to={redirect} />;
+  }
+
   return (
     <div className="bg-white shadow shadow-gray-500 p-4 mt-8 sticky top-10 rounded-2xl">
       <div className="text-2xl text-center">
         Price: ${place.price} / per night
       </div>
       <div className="border border-gray-400 rounded-2xl mt-4">
-        <div className="flex">
+        <div className="lg:flex md:grid md:grid-cols-2">
           <div className=" py-3 px-4">
             <label htmlFor="check-in" className="text-sm font-bold">
               CHECK-IN:
@@ -30,7 +68,7 @@ export default function BookingWidget({ place }) {
               onChange={(ev) => setCheckIn(ev.target.value)}
             />
           </div>
-          <div className="  py-3 px-4 border-l border-gray-400 ">
+          <div className="py-3 px-4 border-l border-gray-400 ">
             <label htmlFor="check-out" className="text-sm font-bold">
               CHECKOUT:
             </label>
@@ -58,7 +96,38 @@ export default function BookingWidget({ place }) {
           </div>
         </div>
       </div>
-      <button className="primary mt-4">Reserve</button>
+      {numberOfNights > 0 && (
+        <div className="my-3">
+          <label htmlFor="name" className="font-bold">
+            Your Full Name:
+          </label>
+          <input
+            type="text"
+            name="name"
+            placeholder="John Doe"
+            value={name}
+            onChange={(ev) => setName(ev.target.value)}
+          />
+
+          <label htmlFor="phone" className="font-bold">
+            Your Phone Number:
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="+91 1110000000"
+            value={phone}
+            onChange={(ev) => setPhone(ev.target.value)}
+          />
+        </div>
+      )}
+      <button
+        className="primary mt-4 "
+        disabled={isButtonDisabled}
+        onClick={book}
+      >
+        Reserve
+      </button>
       {numberOfNights > 0 && (
         <>
           <div className="text-center text-sm my-4 text-gray-500">
