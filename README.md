@@ -1,4 +1,4 @@
-# Roamio-mern
+# Roamio-Vacation Destination Booking App
 
 Introduction
 
