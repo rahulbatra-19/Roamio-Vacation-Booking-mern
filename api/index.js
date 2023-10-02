@@ -86,7 +86,6 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
-  console.log(token);
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, tokenData) => {
       if (err) throw err;
@@ -206,7 +205,9 @@ app.put("/places", async (req, res) => {
 });
 
 app.get("/places", async (req, res) => {
-  res.json(await Place.find());
+  const placeDoc = await Place.find();
+  console.log(placeDoc);
+  res.json(placeDoc);
 });
 
 app.post("/bookings", (req, res) => {

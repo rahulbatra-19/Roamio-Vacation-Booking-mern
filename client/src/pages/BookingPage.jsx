@@ -26,7 +26,7 @@ export default function BookingPage() {
       <div className="absolute inset-0  bg-black  min-h-screen h-full ">
         <div className=" bg-black p-8 grid  gap-4">
           <div>
-            <h2 className="text-2xl mr-48 text-white ">
+            <h2 className="pt-16 md:text-2xl md:p-0 md:mr-48 text-white ">
               Photos of {data.place.title}
             </h2>
             <button
@@ -70,11 +70,11 @@ export default function BookingPage() {
   }
   return (
     <div className="mt-4 lg:mx-8   md:mx-3  lg:px-8 pt-8">
-      <h1 className="text-4xl">{data.place.title}</h1>
+      <h1 className="text-l md:text-4xl">{data.place.title}</h1>
       <a
         target="_black"
         href={`https://maps.google.com/?q=${data.place.address}`}
-        className="flex gap-1 my-3  font-semibold underline"
+        className="flex gap-1 my-3 font-semibold underline"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -98,67 +98,71 @@ export default function BookingPage() {
 
         {data.place.address}
       </a>
-      <div className="bg-gray-200 p-6 mx-1 my-6 rounded-2xl flex items-center justify-between">
+      <div className="bg-gray-200 p-6 mx-1 my-6  rounded-2xl md:flex items-center justify-between">
         <div>
-          <h2 className="text-xl mb-3">Your booking information:</h2>
-          <div className="flex items-center gap-1 text-gray-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
-              />
-            </svg>
-            {differenceInCalendarDays(
-              new Date(data.checkOut),
-              new Date(data.checkIn)
-            )}{" "}
-            nights:
-            <div className="flex gap-1 ml-2 items-center">
+          <h2 className="md:text-xl mb-3">Your booking information:</h2>
+          <div className="md:flex items-center gap-1  text-gray-500">
+            <div className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-5 h-5"
+                className="w-6 h-6"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+                  d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
                 />
               </svg>
-              {format(new Date(data.checkIn), "yyyy-MM-dd")}
+              {differenceInCalendarDays(
+                new Date(data.checkOut),
+                new Date(data.checkIn)
+              )}{" "}
+              nights:{" "}
             </div>
-            &rarr;
-            <div className="flex gap-1 items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
-                />
-              </svg>
-              {format(new Date(data.checkOut), "yyyy-MM-dd")}
+            <div className="flex">
+              <div className="flex text-sm  items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+                  />
+                </svg>
+                {format(new Date(data.checkIn), "yyyy-MM-dd")}
+              </div>
+              &rarr;
+              <div className="flex text-sm gap-1 items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+                  />
+                </svg>
+                {format(new Date(data.checkOut), "yyyy-MM-dd")}
+              </div>{" "}
             </div>
           </div>
         </div>
-        <div className="bg-primary text-white p-6 rounded-2xl">
+        <div className="bg-primary mt-3 md:mt-0 text-white p-6 rounded-2xl">
           Total Price :<div className="text-3xl">${data.price}</div>
         </div>
       </div>

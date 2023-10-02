@@ -23,7 +23,7 @@ function Header() {
         </svg>
         <span className="font-bold  text-xl">roamio</span>
       </Link>
-      <div className="flex border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
+      <div className="lg:flex border hidden  border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
         <div className="gap-2 border-r border-gray-300 px-2">Anywhere</div>
         <div className="gap-2 border-r border-gray-300 px-2">Any week</div>
         <div className="gap-2 px-2">Add guests</div>

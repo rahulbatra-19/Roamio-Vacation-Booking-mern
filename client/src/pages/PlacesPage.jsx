@@ -89,7 +89,7 @@ export default function PlacesPage() {
               places.map((place, index) => (
                 <Link
                   to={"/account/listing/" + place._id}
-                  className="flex cursor-pointer gap-4 bg-gray-200 p-4 mt-2 rounded-2xl"
+                  className="md:flex block cursor-pointer gap-4 bg-gray-200 p-4 mt-2 rounded-2xl"
                   key={index}
                 >
                   <div className="w-32 h-32 bg-gray-300 grow shrink-0">
@@ -103,7 +103,7 @@ export default function PlacesPage() {
                       />
                     )}
                   </div>
-                  <div className="grow-0 shrink">
+                  <div className="grow-0 shrink mt-3 md:mt-0">
                     <h2 className="text-xl text-left ">{place.title}</h2>
                     <p className="text-sm mt-2 text-left">
                       {place.description}

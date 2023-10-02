@@ -122,7 +122,7 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
               </button>
             </div>
           ))}
-        <label className="cursor-pointer h-32 flex items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600">
+        <label className="cursor-pointer h-32 flex text-sm items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 md:text-2xl text-gray-600">
           <input
             type="file"
             multiple
