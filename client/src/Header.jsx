@@ -77,7 +77,7 @@ function Header() {
             />
           </svg>
         </div>
-        {!!user && <div className="ml-2">{user.name}</div>}
+        {!!user && <div className="ml-2">{user.name.split(" ")[0]}</div>}
       </Link>
     </header>
   );

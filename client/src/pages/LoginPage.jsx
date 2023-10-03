@@ -10,7 +10,7 @@ export function LoginPage() {
   async function handleLoginSubmit(e) {
     e.preventDefault();
     try {
-      const {data} = await axios.post("/login", { email, password });
+      const {data} = await axios.post("user/login", { email, password });
       setUser(data);
       alert("Login Successful");
 

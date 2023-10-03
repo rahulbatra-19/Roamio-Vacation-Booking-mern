@@ -10,7 +10,7 @@ export default function BookingPage() {
 
   useEffect(() => {
     axios
-      .get("/booking/" + id)
+      .get("/bookings/" + id)
       .then((res) => {
         setData(res.data);
       })

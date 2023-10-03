@@ -23,7 +23,7 @@ export default function PlacesPage() {
   //   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get("/user-places").then(({ data }) => {
+    axios.get("/user/places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);

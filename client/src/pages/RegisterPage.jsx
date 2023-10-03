@@ -1,22 +1,26 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 export function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   async function registerUser(e) {
     e.preventDefault();
-    // try {
-        await axios.post("/register", {
-          name,
-          email,
-          password,
-        });
-        alert("Registration successful. Now you can log in");
-    // } catch (error) {
-    //   alert("Registration failed. Please try again later.");
-    // }
+    try {
+      await axios.post("user/register", {
+        name,
+        email,
+        password,
+      });
+      alert("Registration successful. Now you can log in");
+      navigate("/login");
+    } catch (error) {
+      alert("Registration failed. Please try again later.");
+    }
   }
   return (
     <div className="mt-4 grow flex items-center justify-around">
