@@ -206,7 +206,6 @@ app.put("/places", async (req, res) => {
 
 app.get("/places", async (req, res) => {
   const placeDoc = await Place.find();
-  console.log(placeDoc);
   res.json(placeDoc);
 });
 

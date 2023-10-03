@@ -55,8 +55,7 @@ export default function PlacesPage() {
   console.log(action);
 
   if (redirect) {
-    setRedirect("");
-    navigate(-1);
+    navigate("/account/places");
   }
   return (
     <div>
