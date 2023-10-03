@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const Place = require("../models/Place");
-const BookingModel = require("../models/Booking");
 const bcrypt = require("bcryptjs");
 const bcrpytSalt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");

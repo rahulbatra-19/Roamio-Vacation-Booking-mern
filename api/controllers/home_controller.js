@@ -1,6 +1,4 @@
 const User = require("../models/User");
-const Place = require("../models/Place");
-const BookingModel = require("../models/Booking");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
