@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookingWidget from "../BookingWidget";
 import GetLabel from "../GetLabel";
+import Image from "../Image";
 
 export default function PlacePage() {
   const { id } = useParams();
@@ -51,15 +52,21 @@ export default function PlacePage() {
             {place?.addedPhotos.length > 0 &&
               place.addedPhotos.map((photo, index) => (
                 <div key={index}>
-                  <a
-                    target="_blank"
-                    href={`http://localhost:4000/uploads/${photo}`}
-                  >
-                    <img
-                      src={`http://localhost:4000/uploads/${photo}`}
-                      alt=""
-                    />
-                  </a>
+                  {photo.includes("https://") ? (
+                    <a target="_blank" href={photo}>
+                      <Image src={photo} alt="" />
+                    </a>
+                  ) : (
+                    <a
+                      target="_blank"
+                      href={`http://localhost:4000/uploads/${photo}`}
+                    >
+                      <img
+                        src={`http://localhost:4000/uploads/${photo}`}
+                        alt=""
+                      />
+                    </a>
+                  )}
                 </div>
               ))}
           </div>
@@ -104,9 +111,9 @@ export default function PlacePage() {
             <div>
               {place.addedPhotos?.[0] && (
                 <div>
-                  <img
+                  <Image
                     onClick={() => setShowAllPhotos(true)}
-                    src={`http://localhost:4000/uploads/${place.addedPhotos[0]}`}
+                    src={place.addedPhotos[0]}
                     className="cursor-pointer aspect-square object-cover"
                   />
                 </div>
@@ -114,18 +121,18 @@ export default function PlacePage() {
             </div>
             <div className="grid">
               {place.addedPhotos?.[1] && (
-                <img
+                <Image
                   onClick={() => setShowAllPhotos(true)}
                   className=" cursor-pointer aspect-square object-cover"
-                  src={`http://localhost:4000/uploads/${place.addedPhotos[1]}`}
+                  src={place.addedPhotos[1]}
                 />
               )}
               <div className="overflow-hidden">
                 {place.addedPhotos?.[2] && (
-                  <img
+                  <Image
                     onClick={() => setShowAllPhotos(true)}
                     className="cursor-pointer aspect-square object-cover relative top-2"
-                    src={`http://localhost:4000/uploads/${place.addedPhotos[2]}`}
+                    src={place.addedPhotos[2]}
                   />
                 )}
               </div>

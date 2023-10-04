@@ -4,10 +4,12 @@ const bcrypt = require("bcryptjs");
 const bcrpytSalt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
+const mongoose = require("mongoose");
 
 module.exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  mongoose.connect(process.env.MONGO_URL);
 
+  const { name, email, password } = req.body;
   try {
     const user = await User.create({
       name,
@@ -21,6 +23,8 @@ module.exports.register = async (req, res) => {
 };
 
 module.exports.login = async (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { email, password } = req.body;
   const userDoc = await User.findOne({ email });
   if (userDoc) {
@@ -49,6 +53,8 @@ module.exports.logout = (req, res) => {
 };
 
 module.exports.UserPlaces = (req, res) => {
+  mongoose.connect(process.env.MONGO_URL);
+
   const { token } = req.cookies;
 
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {

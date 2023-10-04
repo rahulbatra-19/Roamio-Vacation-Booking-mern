@@ -2,6 +2,7 @@ import axios from "axios";
 import { differenceInCalendarDays, format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Image from "../Image";
 
 export default function BookingPage() {
   const [data, setData] = useState(null);
@@ -52,15 +53,21 @@ export default function BookingPage() {
             {data.place?.addedPhotos.length > 0 &&
               data.place.addedPhotos.map((photo, index) => (
                 <div key={index}>
-                  <a
-                    target="_blank"
-                    href={`http://localhost:4000/uploads/${photo}`}
-                  >
-                    <img
-                      src={`http://localhost:4000/uploads/${photo}`}
-                      alt=""
-                    />
-                  </a>
+                  {photo.includes("https://") ? (
+                    <a target="_blank" href={photo}>
+                      <Image src={photo} alt="" />
+                    </a>
+                  ) : (
+                    <a
+                      target="_blank"
+                      href={`http://localhost:4000/uploads/${photo}`}
+                    >
+                      <img
+                        src={`http://localhost:4000/uploads/${photo}`}
+                        alt=""
+                      />
+                    </a>
+                  )}
                 </div>
               ))}
           </div>
@@ -171,9 +178,9 @@ export default function BookingPage() {
           <div>
             {data.place.addedPhotos?.[0] && (
               <div>
-                <img
+                <Image
                   onClick={() => setShowAllPhotos(true)}
-                  src={`http://localhost:4000/uploads/${data.place.addedPhotos[0]}`}
+                  src={data.place.addedPhotos[0]}
                   className="cursor-pointer aspect-square object-cover"
                 />
               </div>
@@ -181,18 +188,18 @@ export default function BookingPage() {
           </div>
           <div className="grid">
             {data.place.addedPhotos?.[1] && (
-              <img
+              <Image
                 onClick={() => setShowAllPhotos(true)}
                 className=" cursor-pointer aspect-square object-cover"
-                src={`http://localhost:4000/uploads/${data.place.addedPhotos[1]}`}
+                src={data.place.addedPhotos[1]}
               />
             )}
             <div className="overflow-hidden">
               {data.place.addedPhotos?.[2] && (
-                <img
+                <Image
                   onClick={() => setShowAllPhotos(true)}
                   className="cursor-pointer aspect-square object-cover relative top-2"
-                  src={`http://localhost:4000/uploads/${data.place.addedPhotos[2]}`}
+                  src={data.place.addedPhotos[2]}
                 />
               )}
             </div>

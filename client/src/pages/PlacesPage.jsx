@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import PhotosUploader from "../PhotosUploader";
 import GetLabel from "../GetLabel";
+import Image from "../Image";
 
 export default function PlacesPage() {
   let { action } = useParams();
@@ -93,11 +94,8 @@ export default function PlacesPage() {
                 >
                   <div className="w-32 h-32 bg-gray-300 grow shrink-0">
                     {place.addedPhotos.length > 0 && (
-                      <img
-                        src={
-                          "http://localhost:4000/uploads/" +
-                          place.addedPhotos[0]
-                        }
+                      <Image
+                        src={place.addedPhotos[0]}
                         className=" h-full w-full object-cover"
                       />
                     )}

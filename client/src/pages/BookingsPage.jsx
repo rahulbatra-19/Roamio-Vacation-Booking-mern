@@ -4,6 +4,7 @@ import format from "date-fns/format";
 import { differenceInCalendarDays } from "date-fns";
 import { Link, useParams } from "react-router-dom";
 import BookingPage from "./BookingPage";
+import Image from "../Image";
 
 export default function BookingsPage() {
   const [bookings, setBookings] = useState([]);
@@ -27,11 +28,8 @@ export default function BookingsPage() {
           >
             <div className="md:w-48">
               {booking.place.addedPhotos.length > 0 && (
-                <img
-                  src={
-                    "http://localhost:4000/uploads/" +
-                    booking.place.addedPhotos[0]
-                  }
+                <Image
+                  src={booking.place.addedPhotos[0]}
                   className=" h-full w-full object-cover"
                 />
               )}
