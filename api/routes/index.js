@@ -4,7 +4,6 @@ const homeController = require("../controllers/home_controller");
 const multer = require("multer");
 const photosMiddleware = multer({ dest: "/tmp" });
 
-
 router.use("/user", require("./users"));
 router.use("/places", require("./places"));
 router.use("/bookings", require("./booking"));
@@ -15,6 +14,5 @@ router.post(
   photosMiddleware.array("photos", 100),
   homeController.upload
 );
-
 
 module.exports = router;
