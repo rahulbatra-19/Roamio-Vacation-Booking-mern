@@ -10,8 +10,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   cors({
     credentials: true,
-    origin:
-      "https://roamio-vacation-booking-mern-ev708ua53-rahul-batras-projects.vercel.app/",
+    origin: "http://localhost:5173",
   })
 );
 // mongoose.connect(process.env.MONGO_URL);
