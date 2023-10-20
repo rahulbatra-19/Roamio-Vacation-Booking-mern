@@ -16,4 +16,4 @@ app.use(
 // mongoose.connect(process.env.MONGO_URL);
 // using express Routes
 app.use("/api", require("./routes"));
-app.listen(4000);
+app.listen(process.env.PORT);
