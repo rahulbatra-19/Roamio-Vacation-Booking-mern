@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 function Header() {
-  const { user } = useContext(UserContext);
+  const { user, search, setSearch } = useContext(UserContext);
+  const [searchText, setSearchText] = useState("");
 
   return (
     <header className="flex justify-between border-b pb-6">
@@ -23,26 +24,66 @@ function Header() {
         </svg>
         <span className="font-bold  text-xl">roamio</span>
       </Link>
-      <div className="lg:flex border hidden  border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
-        <div className="gap-2 border-r border-gray-300 px-2">Anywhere</div>
-        <div className="gap-2 border-r border-gray-300 px-2">Any week</div>
-        <div className="gap-2 px-2">Add guests</div>
-        <button className="bg-primary text-white p-1 rounded-full">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-4 h-4"
+      <div className="lg:flex border hidden border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
+        {/* <div className="gap-2 border-r border-gray-300 px-2 cursor-pointer">
+          Anywhere
+        </div>
+        <div className="gap-2 border-r border-gray-300 px-2 cursor-pointer">
+          Any week
+        </div>
+        <div className="gap-2 px-2">Add guests</div> */}
+        <div className="gap-1 border-gray-300 px-2 cursor-pointer">
+          <input
+            type="text"
+            className="border-none py-0 h-5 text-gray-600 w-3 p-0 rounded-none"
+            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+          />
+        </div>
+        {search.length > 0 ? (
+          <button
+            className="bg-primary text-white p-1 rounded-full 
+        "
+            onClick={() => {
+              setSearch("");
+              setSearchText("");
+            }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        ) : (
+          <button
+            className="bg-primary text-white p-1 rounded-full 
+        "
+            onClick={() => setSearch(searchText)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </button>
+        )}
       </div>
       <Link
         to={user ? "/account" : "/login"}
