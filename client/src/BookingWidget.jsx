@@ -13,15 +13,19 @@ export default function BookingWidget({ place }) {
   const { user } = useContext(UserContext);
   const [redirect, setRedirect] = useState("");
   const [isButtonDisabled, setIsButtonDiabled] = useState(true);
+  const [numberOfNights, setNumberOfNights] = useState(0);
+  useEffect(() => {
+    if (checkIn && checkOut) {
+      let nights = differenceInCalendarDays(
+        new Date(checkOut),
+        new Date(checkIn)
+      );
+      setNumberOfNights(nights);
+      console.log(numberOfNights);
+      setIsButtonDiabled(false);
+    }
+  }, [checkIn, checkOut]);
 
-  let numberOfNights = 0;
-  if (checkIn && checkOut) {
-    numberOfNights = differenceInCalendarDays(
-      new Date(checkOut),
-      new Date(checkIn)
-    );
-    setIsButtonDiabled(false);
-  }
   async function book() {
     if (user === null) {
       alert("Please login!");
@@ -97,39 +101,37 @@ export default function BookingWidget({ place }) {
         </div>
       </div>
       {numberOfNights > 0 && (
-        <div className="my-3">
-          <label htmlFor="name" className="font-bold">
-            Your Full Name:
-          </label>
-          <input
-            type="text"
-            name="name"
-            placeholder="John Doe"
-            value={name}
-            onChange={(ev) => setName(ev.target.value)}
-          />
-
-          <label htmlFor="phone" className="font-bold">
-            Your Phone Number:
-          </label>
-          <input
-            type="tel"
-            name="phone"
-            placeholder="+91 1110000000"
-            value={phone}
-            onChange={(ev) => setPhone(ev.target.value)}
-          />
-        </div>
-      )}
-      <button
-        className="primary mt-4 "
-        disabled={isButtonDisabled}
-        onClick={book}
-      >
-        Reserve
-      </button>
-      {numberOfNights > 0 && (
         <>
+          <div className="my-3">
+            <label htmlFor="name" className="font-bold">
+              Your Full Name:
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="John Doe"
+              value={name}
+              onChange={(ev) => setName(ev.target.value)}
+            />
+
+            <label htmlFor="phone" className="font-bold">
+              Your Phone Number:
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              placeholder="+91 1110000000"
+              value={phone}
+              onChange={(ev) => setPhone(ev.target.value)}
+            />
+          </div>
+          <button
+            className="primary mt-4 "
+            disabled={isButtonDisabled}
+            onClick={book}
+          >
+            Reserve
+          </button>
           <div className="text-center text-sm my-4 text-gray-500">
             You won't be charged yet
           </div>
