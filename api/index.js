@@ -7,12 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use(
-  cors({
-    credentials: true,
-    origin: process.env.CORS_URL_FRONTEND,
-  })
-);
+app.use(cors());
 // mongoose.connect(process.env.MONGO_URL);
 // using express Routes
 app.use("/api", require("./routes"));
