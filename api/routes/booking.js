@@ -7,8 +7,8 @@ const corsData = {
   origin: "https://roamio-app.netlify.app",
 };
 
-router.post("/", cors(corsData), bookingController.createBooking);
-router.get("/", cors(corsData), bookingController.getBookings);
-router.get("/:id", cors(corsData), bookingController.getBookingById);
+router.post("/",  bookingController.createBooking);
+router.get("/", bookingController.getBookings);
+router.get("/:id", bookingController.getBookingById);
 
 module.exports = router;
