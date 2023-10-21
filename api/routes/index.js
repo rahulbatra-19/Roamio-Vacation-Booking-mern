@@ -6,7 +6,7 @@ const photosMiddleware = multer({ dest: "/tmp" });
 const cors = require("cors");
 const corsData = {
   credentials: true,
-  origin: "https://roamio-app.netlify.app/",
+  origin: "https://roamio-app.netlify.app",
 };
 
 router.use("/user", cors(corsData), require("./users"));

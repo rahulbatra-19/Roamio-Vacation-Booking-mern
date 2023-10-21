@@ -4,7 +4,7 @@ const userController = require("../controllers/user_controller");
 const cors = require("cors");
 const corsData = {
   credentials: true,
-  origin: "https://roamio-app.netlify.app/",
+  origin: "https://roamio-app.netlify.app",
 };
 
 router.post("/register", cors(corsData), userController.register);

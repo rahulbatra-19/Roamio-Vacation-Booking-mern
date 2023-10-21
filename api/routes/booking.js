@@ -4,7 +4,7 @@ const bookingController = require("../controllers/booking_controller");
 const cors = require("cors");
 const corsData = {
   credentials: true,
-  origin: "https://roamio-app.netlify.app/",
+  origin: "https://roamio-app.netlify.app",
 };
 
 router.post("/", cors(corsData), bookingController.createBooking);

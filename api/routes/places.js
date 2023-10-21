@@ -4,7 +4,7 @@ const placeController = require("../controllers/place_controller");
 const cors = require("cors");
 const corsData = {
   credentials: true,
-  origin: "https://roamio-app.netlify.app/",
+  origin: "https://roamio-app.netlify.app",
 };
 
 

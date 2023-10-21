@@ -10,7 +10,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   cors({
     credentials: true,
-    origin: "https://roamio-app.netlify.app/",
+    origin: "https://roamio-app.netlify.app",
   })
 );
 // mongoose.connect(process.env.MONGO_URL);
