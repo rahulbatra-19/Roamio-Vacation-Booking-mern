@@ -9,9 +9,9 @@ const corsData = {
   origin: "https://roamio-app.netlify.app",
 };
 
-router.use("/user", cors(corsData), require("./users"));
-router.use("/places", cors(corsData), require("./places"));
-router.use("/bookings", cors(corsData), require("./booking"));
+router.use("/user", require("./users"));
+router.use("/places", require("./places"));
+router.use("/bookings", require("./booking"));
 router.get("/profile", cors(corsData), homeController.profile);
 router.post("/upload-by-link", cors(corsData), homeController.uploadByLink);
 router.post(
