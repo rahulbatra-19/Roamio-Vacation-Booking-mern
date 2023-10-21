@@ -37,7 +37,11 @@ module.exports.login = async (req, res) => {
         (err, token) => {
           if (err) throw err;
           res
-            .cookie("token", token, { maxAge: 13 * 60 * 60 * 1000 })
+            .cookie("token", token, {
+              maxAge: 13 * 60 * 60 * 1000,
+              sameSite: "none",
+              secure: true,
+            })
             .json(userDoc);
         }
       );
